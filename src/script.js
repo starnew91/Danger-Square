@@ -164,7 +164,7 @@ function generateWoods() {
 
     for (var i = 0; i < 6; i++) {
         var x = i * 130 + 50;
-        var y = 280;
+        var y = 250;
         var wood = woods.create(x, y, 'wood');
         wood.setScale(0.65);
         wood.setImmovable(true);
@@ -195,7 +195,7 @@ function restartGame() {
     player.setTexture('player');
     this.physics.resume();
     score = 0;
-    scoreText.setText('Score: 0');
+    scoreText.setText('Score: 0');    
     generateWoods.call(this);
-    generateBars.call(this);
+    generateBars.call(this);    
 }
