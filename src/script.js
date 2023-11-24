@@ -42,8 +42,8 @@ function preload() {
     this.load.image('rightButton', 'assets/rightbutton.png');
     this.load.image('wood', 'assets/wood.png');
     this.load.image('restartButton', 'assets/restartbutton.png');
-    this.load.audio('backgroundMusic', 'assets/background-music.mp3');
-    this.load.audio('hitSound', 'assets/hit-sound.mp3');
+    this.load.audio('backgroundMusic', 'assets/backgroundMusic.mp3');
+    this.load.audio('collectWood', 'assets/collectWood.mp3');
     this.load.audio('gameOverSound', 'assets/gameOver.mp3');
 }
 
@@ -132,34 +132,6 @@ function playerHitBar(player, bar) {
     }
 }
 
-function roofHit(player, roof) {
-    if (!isGameOver) {
-        isGameOver = true;
-        player.setTexture('sadplayer');
-        this.physics.pause();
-
-        backgroundMusic.stop();
-
-        var gameOverSound = this.sound.add('gameOverSound');
-        gameOverSound.play();
-    }
-}
-
-function playerHitWood(player, wood) {
-    if (!isGameOver) {
-        wood.disableBody(true, true);
-        score += 10;
-
-        var hitSound = this.sound.add('hitSound');
-        hitSound.play();
-
-        if (woods.countActive() === 0) {
-            generateWoods.call(this);
-            bars.setVelocityY(-110);
-        }
-    }
-}
-
 function gameOver() {
     if (!isGameOver) {
         isGameOver = true;
@@ -196,7 +168,23 @@ function generateWoods() {
     }
 
     this.physics.add.collider(woods, platforms);
-    this.physics.add.collider(woods, player, playerHitWood, null, this);
+    this.physics.add.overlap(woods, player, playerHitWood, null, this);
+}
+
+function playerHitWood(player, wood) {
+    if (!isGameOver) {
+        wood.setAlpha(0);
+        wood.disableBody(true, true);
+        score += 10;
+
+        var hitSound = this.sound.add('collectWood');
+        hitSound.play();
+
+        if (woods.countActive() === 0) {
+            generateWoods.call(this);
+            bars.setVelocityY(-110);
+        }
+    }
 }
 
 function restartGame() {
