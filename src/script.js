@@ -30,6 +30,7 @@ var roof;
 var isGameOver = false;
 var woods;
 var restartButton;
+var barSpeed = -150;
 
 function preload() {
     this.load.image('background', 'assets/background.png');
@@ -119,9 +120,9 @@ function update() {
 
         bars.children.iterate(function (bar) {
             if (bar.y < -50) {
-                bar.setY(370);
-                bar.setX(Phaser.Math.Between(bar.width / 2, game.config.width - bar.width / 2));
-                bar.setVelocityY(-110);
+                bar.setY(game.config.height + 50);
+                bar.setX(Phaser.Math.Between(0, game.config.width));                
+                bar.setVelocityY(barSpeed);
             }
         });
     }
@@ -147,12 +148,14 @@ function generateBars() {
     bars.clear(true, true);
 
     for (var i = 0; i < 3; i++) {
-        var x = Phaser.Math.Between(50, game.config.width - 50);
-        var y = 370 - i * 120;
+        var x = Phaser.Math.Between(0, game.config.width);
+        var y = game.config.height + 50 + i * 120;
         var bar = bars.create(x, y, 'bar');
-        bar.setOrigin(0.5, 0.5);
-        bar.setVelocityY(-80);
+        bar.setOrigin(0.5, 0.5);        
         bar.setScale(0.5);
+
+        bar.setVelocityY(barSpeed); 
+        
     }
 }
 
