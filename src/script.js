@@ -104,7 +104,7 @@ function create() {
     });
 
     restartButton = this.add.image(750, 70, 'restartButton').setInteractive();
-    restartButton.setOrigin(0.5, 0.5).setDisplaySize(60, 60);
+    restartButton.setOrigin(0.5, 0.5).setDisplaySize(80, 40);
     restartButton.on('pointerdown', function () {
         restartGame.call(this);
     }.bind(this));
